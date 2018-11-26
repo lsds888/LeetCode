@@ -7,7 +7,6 @@ public:
         unordered_map<int,int>::iterator it;
         for(it=map.begin();it!=map.end();it++){
             if(it->second==1)
-                break;
         }
         return it->first;
     }
