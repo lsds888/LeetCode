@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int,vector<int>,greater<int>> q;
+        for(int i=0;i<nums.size();i++){
+            if(q.size()==k){
+                if(q.top()<nums[i]){
+                    q.pop();
+                    q.push(nums[i]);
+                }
+            }else{
+                q.push(nums[i]);
+            }
+        }
+        return q.top();
+    }
+};
+
+
+/*priority_queue<int,vector<int>,greater<int>> q  为小顶堆（q.top()为最小的数）
+  priority_queue<int,vector<int>,less<int>> q     为大顶堆（q.top()为最大的数）
+  */
