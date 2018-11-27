@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* findmiddle(ListNode* head){
+        ListNode* low=head;
+        ListNode* fast=head;
+        if(head==NULL) return NULL;
+        while(fast->next!=NULL&&fast->next->next!=NULL){
+            fast=fast->next->next;
+            low=low->next;
+        }
+        return low;
+    }
+    
+    ListNode* merge(ListNode* first, ListNode* second){
+        ListNode* head=new ListNode(0);
+        ListNode* temp=head;
+        while(first!=NULL&&second!=NULL){
+            if(first->val<=second->val){
+                temp->next=first;
+                temp=first;
+                first=first->next;
+            }else{
+                temp->next=second;
+                temp=second;
+                second=second->next;
+            }
+        }
+        while(first){
+            temp->next=first;
+            temp=first;
+            first=first->next;
+        }
+        while(second){
+            temp->next=second;
+            temp=second;
+            second=second->next;
+        }
+        return head->next;
+    }
+    
+    ListNode* mergeSort(ListNode* head){
+        if(head->next==NULL) return head;
+        ListNode* mid=findmiddle(head);
+        ListNode* mid_next=mid->next;
+        mid->next=NULL;
+        ListNode* first=mergeSort(head);
+        ListNode* second=mergeSort(mid_next);
+        return merge(first,second);
+    }
+    
+    ListNode* sortList(ListNode* head) {
+        if(head==NULL || head->next==NULL)
+            return head;
+        return mergeSort(head);
+    }
+};
