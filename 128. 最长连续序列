@@ -1,0 +1,69 @@
+给定一个未排序的整数数组，找出最长连续序列的长度。
+
+要求算法的时间复杂度为 O(n)。
+
+示例:
+
+输入: [100, 4, 200, 1, 3, 2]
+输出: 4
+解释: 最长连续序列是 [1, 2, 3, 4]。它的长度为 4。
+
+
+//使用排序
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size()==0) return 0;
+        sort(nums.begin(),nums.end());
+        int count=1;
+        int res=1;
+        for(int i=1;i<nums.size();i++){
+            if(nums[i-1]!=nums[i]){
+                 if(nums[i-1]+1==nums[i]){
+                    count++;
+                 }else{
+                    count=1;
+                 }
+                 res=max(res,count);
+            }
+        }
+        return res;
+    }
+};
+
+
+//使用set,非排序
+class Solution {
+public:
+    unordered_set<int> set;
+    enum orderby{
+        add,
+        dec
+    };
+    int find(orderby ord,int val){
+        int maxl=0;
+        while(set.find(val)!=set.end()){
+            ++maxl;
+            set.erase(val);
+            if(ord==add)
+                ++val;
+            else
+                --val;
+        }
+        return maxl;
+    }
+    int longestConsecutive(vector<int>& nums) {
+        for(int i=0;i<nums.size();i++){
+            set.insert(nums[i]);
+        }
+        int maxl=0;
+        for(int i=0;i<nums.size();i++){
+            int addmax=find(add,nums[i]);
+            int decmax=find(dec,nums[i]-1);
+            if(addmax+decmax>maxl)
+                maxl=addmax+decmax;
+        }
+        return maxl;
+    }
+};
