@@ -37,7 +37,7 @@ public:
             int j=k/f[i-1];
             k%=f[i-1];
             res.push_back(num[j]);
-            num.erase(j,1);
+            num.erase(j,1);//删除从j开始的1个元素
         }
         return res;
     }
