@@ -45,20 +45,14 @@ public:
         }
         return head->next;
     }
-    
-    ListNode* mergeSort(ListNode* head){
-        if(head->next==NULL) return head;
+        
+    ListNode* sortList(ListNode* head) {
+        if(head==NULL || head->next==NULL) return head;
         ListNode* mid=findmiddle(head);
         ListNode* mid_next=mid->next;
         mid->next=NULL;
         ListNode* first=mergeSort(head);
         ListNode* second=mergeSort(mid_next);
         return merge(first,second);
-    }
-    
-    ListNode* sortList(ListNode* head) {
-        if(head==NULL || head->next==NULL)
-            return head;
-        return mergeSort(head);
     }
 };
