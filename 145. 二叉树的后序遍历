@@ -1,0 +1,54 @@
+给定一个二叉树，返回它的 后序 遍历。
+
+示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [3,2,1]
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> vec;
+        if(root==NULL) return vec;
+        stack<TreeNode*> s;
+        TreeNode* pcur=root;
+        TreeNode* plast=NULL;
+        while(pcur){
+            s.push(pcur);
+            pcur=pcur->left;
+        }
+        while(!s.empty()){
+            pcur=s.top();
+            s.pop();
+            if(pcur->right==NULL || pcur->right==plast){
+                vec.push_back(pcur->val);
+                plast=pcur;
+            }else{
+                s.push(pcur);
+                pcur=pcur->right;
+                while(pcur){
+                    s.push(pcur);
+                    pcur=pcur->left;
+                }
+            }
+        }
+        return vec;
+    }
+};
