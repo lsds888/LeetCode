@@ -1,0 +1,50 @@
+给定一个 N 叉树，返回其节点值的后序遍历。
+
+例如，给定一个 3叉树 :
+
+ 
+
+
+
+ 
+
+返回其后序遍历: [5,6,3,2,4,1].
+
+ 
+
+说明: 递归法很简单，你可以使用迭代法完成此题吗?
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        vector<int> res;
+        if(root==NULL) return res;
+        stack<Node*> sta;
+        sta.push(root);
+        while(!sta.empty()){
+            Node* p=sta.top();
+            sta.pop();
+            res.push_back(p->val);
+            for(int i=0;i<p->children.size();i++){
+                sta.push(p->children[i]);
+            }
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
