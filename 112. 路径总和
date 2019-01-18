@@ -47,3 +47,6 @@ public:
 private:
     int count=0;
 };
+
+
+执行用时: 8 ms, 在Path Sum的C++提交中击败了98.06% 的用户
