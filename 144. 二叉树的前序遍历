@@ -1,0 +1,45 @@
+给定一个二叉树，返回它的 前序 遍历。
+
+ 示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [1,2,3]
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> vec;
+        if(root==NULL) return vec;
+        stack<TreeNode*> sta;
+        TreeNode* p=NULL;
+        sta.push(root);
+        while(!sta.empty()){
+            p=sta.top();
+            sta.pop();
+            vec.push_back(p->val);
+            if(p->right!=NULL)
+                sta.push(p->right);
+            if(p->left!=NULL)
+                sta.push(p->left);
+        }
+        return vec;
+    }
+};
+
+执行用时: 0 ms, 在Binary Tree Preorder Traversal的C++提交中击败了100.00% 的用户
