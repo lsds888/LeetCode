@@ -1,0 +1,46 @@
+给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过根结点。
+
+示例 :
+给定二叉树
+
+          1
+         / \
+        2   3
+       / \     
+      4   5    
+返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。
+
+注意：两结点之间的路径长度是以它们之间边的数目表示。
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+//任意两个二叉树结点间的距离等于两个结点到其公共父节点的距离之和，记录距离之和的最大值即为二叉树的直径。
+class Solution {
+public:
+    int helper(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        int l=helper(root->left);
+        int r=helper(root->right);
+        if(n<l+r)
+            n=l+r;
+        return max(l,r)+1;
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        helper(root);
+        return n;
+    }
+private:
+    int n=0;
+};
+
+
+执行用时: 8 ms, 在Diameter of Binary Tree的C++提交中击败了94.68% 的用户
