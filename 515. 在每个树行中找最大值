@@ -1,0 +1,56 @@
+您需要在二叉树的每一行中找到最大的值。
+
+示例：
+
+输入: 
+
+          1
+         / \
+        3   2
+       / \   \  
+      5   3   9 
+
+输出: [1, 3, 9]
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        vector<int> vec;
+        if(!root)
+            return vec;
+        queue<TreeNode*> q;
+        TreeNode* p=NULL;
+        q.push(root);
+        while(!q.empty()){
+            queue<TreeNode*> qt;
+            int max=q.front()->val;
+            while(!q.empty()){
+                p=q.front();
+                q.pop();
+                if(p->val>max)
+                    max=p->val;
+                if(p->left){
+                    qt.push(p->left);
+                }
+                if(p->right){
+                    qt.push(p->right);
+                }
+            }
+            q=qt;
+            vec.push_back(max);
+        }
+        return vec;
+    }
+    
+};
+
+执行用时: 12 ms, 在Find Largest Value in Each Tree Row的C++提交中击败了92.60% 的用户
