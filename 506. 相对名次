@@ -1,0 +1,42 @@
+给出 N 名运动员的成绩，找出他们的相对名次并授予前三名对应的奖牌。前三名运动员将会被分别授予 “金牌”，“银牌” 和“ 铜牌”（"Gold Medal", "Silver Medal", "Bronze Medal"）。
+
+(注：分数越高的选手，排名越靠前。)
+
+示例 1:
+
+输入: [5, 4, 3, 2, 1]
+输出: ["Gold Medal", "Silver Medal", "Bronze Medal", "4", "5"]
+解释: 前三名运动员的成绩为前三高的，因此将会分别被授予 “金牌”，“银牌”和“铜牌” ("Gold Medal", "Silver Medal" and "Bronze Medal").
+余下的两名运动员，我们只需要通过他们的成绩计算将其相对名次即可。
+
+class Solution {
+public:
+    static bool helper(int i,int j){
+        return i>j;
+    }
+    vector<string> findRelativeRanks(vector<int>& nums) {
+        unordered_map<int,int> map;
+        for(int i=0;i<nums.size();i++){
+            map[nums[i]]=i;
+        }
+        sort(nums.begin(),nums.end(),helper);
+        vector<string> res(nums.size());
+        res[map[nums[0]]]="Gold Medal";
+        if(nums.size()==1)
+            return res;
+        res[map[nums[1]]]="Silver Medal";
+        if(nums.size()==2)
+            return res;
+        res[map[nums[2]]]="Bronze Medal";
+        if(nums.size()==3)
+            return res;
+        for(int i=3;i<nums.size();i++){
+            res[map[nums[i]]]=to_string(i+1);
+        }
+        return res;
+    }
+};
+
+
+执行用时: 36 ms, 在Relative Ranks的C++提交中击败了21.59% 的用户
+内存消耗: 9.4 MB, 在Relative Ranks的C++提交中击败了0.00% 的用户
