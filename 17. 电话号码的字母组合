@@ -42,9 +42,9 @@ private:
     }
 public:
     vector<string> letterCombinations(string digits) {
+        res.clear();
         if(digits.size()==0)
             return res;
-        res.clear();
         findCombination(digits,0,"");
         return res;
     }
