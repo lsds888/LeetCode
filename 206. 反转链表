@@ -22,3 +22,32 @@ public:
         
     }
 };
+
+
+方法二：
+class Solution {
+public:
+    ListNode* reverse(stack<ListNode*> data)
+    {
+        ListNode* ans=data.top();
+        data.pop();
+        if(data.empty())
+        {
+            ans->next=NULL;
+            return ans;
+        }
+        ans->next=reverse(data);
+        return ans;
+    }
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL)
+            return NULL;
+        stack<ListNode*> sta;
+        ListNode* p=head;
+        while(p!=NULL){
+            sta.push(p);
+            p=p->next;
+        }
+        return reverse(sta);
+    }
+};
