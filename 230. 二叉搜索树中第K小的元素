@@ -23,3 +23,34 @@ public:
         return vec[k-1];
     }
 };
+
+
+
+
+非递归中序遍历
+
+class Solution {
+public:
+    TreeNode* KthNode(TreeNode* pRoot, int k)
+    {
+        vector<TreeNode*> vec;
+        stack<TreeNode*> sta;
+        TreeNode* p=pRoot;
+        while(!sta.empty()||p){
+            while(p){
+                sta.push(p);
+                p=p->left;
+            }
+            if(!sta.empty()){
+                p=sta.top();
+                sta.pop();
+                vec.push_back(p);
+                if(vec.size()==k)
+                    return p;
+                p=p->right;
+            }
+        }
+        return NULL;
+    }
+};
+
