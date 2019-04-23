@@ -1,0 +1,47 @@
+给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+
+例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+
+满足要求的三元组集合为：
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<int> vec;
+        vector<vector<int>> res;
+        set<vector<int>> se;
+        int len=nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<len-2;i++){
+            int l=i+1;
+            int r=len-1;
+            while(l<r){
+                if(nums[l]+nums[r]==-nums[i]){
+                    vec.clear();
+                    vec.push_back(nums[i]);
+                    vec.push_back(nums[l]);
+                    vec.push_back(nums[r]);
+                    se.insert(vec);
+                    l++;
+                    r--;
+                }else if(nums[l]+nums[r]<-nums[i]){ 
+                    l++;
+                }else{
+                    r--;
+                }
+            }
+        }
+        set<vector<int>>::iterator it=se.begin();
+        for(it=se.begin();it!=se.end();it++){
+            res.push_back(*it);
+        }
+        return res;
+    }
+};
