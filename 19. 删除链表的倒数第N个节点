@@ -33,7 +33,7 @@ public:
             fast=fast->next;
         }
         if(fast==NULL){
-            head=head->next;
+            head=head->next;//由于n是有效的所有当fast为空时就是删除第一个节点
             return head;
         } 
         while(fast->next){
