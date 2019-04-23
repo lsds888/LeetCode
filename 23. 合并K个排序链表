@@ -23,13 +23,9 @@ public:
         }
         if(l1){
             curr->next=l1;
-            l1=l1->next;
-            curr=curr->next;
         }
          if(l2){
             curr->next=l2;
-            l2=l2->next;
-            curr=curr->next;
         }
         return dummy->next;
     }
