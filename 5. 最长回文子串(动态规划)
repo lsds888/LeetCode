@@ -45,4 +45,4 @@ dp[i][i+1]=1 if str[i]==str[i+1]
       上式的意义是单个字符，两个相同字符都是回文串。
       
       
-      https://www.cnblogs.com/mini-coconut/p/9074315.html
+https://www.cnblogs.com/Mrwho1/p/9209285.html
