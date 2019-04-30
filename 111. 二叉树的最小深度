@@ -46,3 +46,17 @@ public:
 
 
 执行用时: 8 ms, 在Minimum Depth of Binary Tree的C++提交中击败了66.99% 的用户
+
+
+
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root==NULL){
+            return 0;
+        }
+        int left=minDepth(root->left);
+        int right=minDepth(root->right);
+        return (left&&right) ? 1+min(left,right):1+left+right;
+    }
+};
