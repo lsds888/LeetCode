@@ -1,0 +1,39 @@
+给两个整数数组 A 和 B ，返回两个数组中公共的、长度最长的子数组的长度。
+
+示例 1:
+
+输入:
+A: [1,2,3,2,1]
+B: [3,2,1,4,7]
+输出: 3
+解释: 
+长度最长的公共子数组是 [3, 2, 1]。
+说明:
+
+1 <= len(A), len(B) <= 1000
+0 <= A[i], B[i] < 100
+在真实的面试中遇到过这道题？
+
+class Solution {
+public:
+    int findLength(vector<int>& A, vector<int>& B) {
+        int lena=A.size();
+        int lenb=B.size();
+        vector<vector<int>> dp(lena,vector<int>(lenb,0));
+        int maxl=0;
+        for(int i=0;i<lena;i++){
+            for(int j=0;j<lenb;j++){
+                if(A[i]==B[j]){
+                    if(i&&j){
+                        dp[i][j]=dp[i-1][j-1]+1;
+                        maxl=max(maxl,dp[i][j]);
+                    }else{
+                        dp[i][j]=1;
+                    }
+                }
+            }
+        }
+        return maxl;
+    }
+};
+
