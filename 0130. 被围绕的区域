@@ -55,7 +55,7 @@ public:
         if(x<board.size()-1) check(board,x+1,y);
         if(y<board[0].size()-1) check(board,x,y+1);
         }
-        
+        return;
     }
 };
 
