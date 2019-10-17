@@ -18,7 +18,7 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-        int i,j,l = 0,r = 0,ans = 1,len = s.length();
+        int i,j,l = 0,ans = 1,len = s.length();
         vector<vector<int>> dp(len,vector<int>(len));
         for(i = 0; i < len; i++)
             dp[i][i] = 1;                //初始化
@@ -33,7 +33,6 @@ public:
                 }
                 if(dp[i][j] == 1 && j-i+1 > ans){
                     l = i;
-                    r = j;
                     ans = j-i+1;
                 }
             }
