@@ -19,7 +19,7 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         int i,j,l = 0,ans = 1,len = s.length();
-        vector<vector<int>> dp(len,vector<int>(len));
+        vector<vector<int>> dp(len,vector<int>(len,0));
         for(i = 0; i < len; i++)
             dp[i][i] = 1;                //初始化
         for(i = len-2; i >= 0; i--){
