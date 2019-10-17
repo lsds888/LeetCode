@@ -28,7 +28,7 @@ candidates 中的数字可以无限制重复被选取。
 
 class Solution {
 public:
-    void helper(vector<vector<int>> &res,vector<int> vec,vector<int> candidates,int level,int target){
+    void dfs(vector<vector<int>> &res,vector<int> vec,vector<int> candidates,int level,int target){
         if(target==0){
             res.push_back(vec);
             return;
@@ -38,7 +38,7 @@ public:
         for(int i=level;i<candidates.size();i++){
             vec.push_back(candidates[i]);
             target-=candidates[i];
-            helper(res,vec,candidates,i,target);
+            dfs(res,vec,candidates,i,target);
             vec.pop_back();
             target+=candidates[i];
         }
@@ -50,8 +50,8 @@ public:
             return res;
         }
         vector<int> vec;
-        sort(candidates.begin(),candidates.end());
-        helper(res,vec,candidates,0,target);
+        //sort(candidates.begin(),candidates.end());
+        dfs(res,vec,candidates,0,target);
         return res;
     }
 };
