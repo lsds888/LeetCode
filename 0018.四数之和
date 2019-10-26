@@ -32,7 +32,7 @@ public:
       }
       for(int z=0;z<len;z++){
         int newtarget=target-nums[z];
-        for(int i=z+1;i<len;i++){
+        for(int i=z+1;i<len-2;i++){
             int j=i+1;
             int m=len-1;
             while(j<m){
