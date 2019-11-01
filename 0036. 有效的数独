@@ -1,0 +1,35 @@
+判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+
+数字 1-9 在每一行只能出现一次。
+数字 1-9 在每一列只能出现一次。
+数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/valid-sudoku
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+    unordered_map<int,int> rows[9];
+    unordered_map<int,int> columns[9];
+    unordered_map<int,int> boxes[9];
+    
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            char num=board[i][j];
+            if(num!='.'){
+                int n=(int)num;
+                int box_index=(i/3)*3+j/3;
+                rows[i][n]++;
+                columns[j][n]++;
+                boxes[box_index][n]++;
+                if(rows[i][n]>1||columns[j][n]>1||boxes[box_index][n]>1){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+    }
+};
