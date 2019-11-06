@@ -24,34 +24,22 @@ class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         vector<int> res;
-        if(matrix.empty()||matrix[0].empty())
+        if(matrix.empty()){
             return res;
-        int h=matrix.size();
-        int w=matrix[0].size();
-        int left=0,right=w-1,top=0,btm=h-1;
-        while(left<=right&&top<=btm){
-            for(int i=left;i<=right;i++){
-                res.push_back(matrix[top][i]);
-            }
-            if(top<btm){
-                for(int i=top+1;i<=btm;i++){
-                    res.push_back(matrix[i][right]);
-                }
-            }
-            if(top<btm&&left<right){
-                for(int i=right-1;i>=left;i--){
-                    res.push_back(matrix[btm][i]);
-                }
-            }
-            if(top+1<btm&&left<right){
-                for(int i=btm-1;i>=top+1;i--){
-                    res.push_back(matrix[i][left]);
-                }
-            }
-            left++;
-            right--;
-            top++;
-            btm--;
+        }
+        int u=0;//上边界
+        int d=matrix.size()-1;//下边界
+        int l=0;//左边界
+        int r=matrix[0].size()-1;//右边界
+        while(true){
+            for(int i=l;i<=r;i++) {res.push_back(matrix[u][i]);}
+            if(++u>d) break;
+            for(int i=u;i<=d;i++) {res.push_back(matrix[i][r]);}
+            if(--r<l) break;
+            for(int i=r;i>=l;i--) {res.push_back(matrix[d][i]);}
+            if(--d<u) break;
+            for(int i=d;i>=u;i--) {res.push_back(matrix[i][l]);}
+            if(++l>r) break;
         }
         return res;
     }
