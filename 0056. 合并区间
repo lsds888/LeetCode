@@ -11,29 +11,22 @@
 输出: [[1,5]]
 解释: 区间 [1,4] 和 [4,5] 可被视为重叠区间。
 
-/**
- * Definition for an interval.
- * struct Interval {
- *     int start;
- *     int end;
- *     Interval() : start(0), end(0) {}
- *     Interval(int s, int e) : start(s), end(e) {}
- * };
- */
 class Solution {
 public:
-    static bool com(const Interval &a, const Interval &b){
-        return a.start<b.start;
+    static bool comp(const vector<int>& a,const vector<int>& b){
+        return a.front()<b.front();
     } 
-    vector<Interval> merge(vector<Interval>& intervals) {
-        vector<Interval> res;
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> res;
         int n=intervals.size();
-        if(n==0) return res;
-        sort(intervals.begin(),intervals.end(),com);
+        if(n==0){
+            return res;
+        }
+        sort(intervals.begin(),intervals.end(),comp);
         res.push_back(intervals[0]);
         for(int i=1;i<n;i++){
-            if(res.back().end>=intervals[i].start){
-                res.back().end=max(res.back().end,intervals[i].end);
+            if(res.back().back()>=intervals[i].front()){
+                res.back().back()=max(res.back().back(),intervals[i].back());
             }else{
                 res.push_back(intervals[i]);
             }
