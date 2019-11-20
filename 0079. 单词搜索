@@ -1,0 +1,51 @@
+给定一个二维网格和一个单词，找出该单词是否存在于网格中。
+
+单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+
+示例:
+
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+给定 word = "ABCCED", 返回 true.
+给定 word = "SEE", 返回 true.
+给定 word = "ABCB", 返回 false.
+
+class Solution {
+public:
+    bool dfs(vector<vector<char>>& board,int rows,int clos,string word,int i,int j,int k,vector<int> &arr){
+        if(i<0||i>=rows||j<0||j>=clos||board[i][j]!=word[k]||arr[i*clos+j]==1){
+            return false;
+        }
+        if(k==word.size()-1){
+            return true;
+        }
+        arr[i*clos+j]=1;
+        if(dfs(board,rows,clos,word,i-1,j,k+1,arr)||
+            dfs(board,rows,clos,word,i+1,j,k+1,arr)||
+            dfs(board,rows,clos,word,i,j-1,k+1,arr)||
+            dfs(board,rows,clos,word,i,j+1,k+1,arr)){
+           return true;
+        }
+        arr[i*clos+j]=0;
+        return false;
+}
+
+    bool exist(vector<vector<char>>& board, string word) {
+        int rows=board.size();
+        int clos=board[0].size();
+        vector<int> arr(rows*clos,0);
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<clos;j++){
+                if(dfs(board,rows,clos,word,i,j,0,arr)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
