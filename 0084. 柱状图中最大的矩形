@@ -1,0 +1,62 @@
+给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+
+求在该柱状图中，能够勾勒出来的矩形的最大面积。
+
+ 
+
+
+
+以上是柱状图的示例，其中每个柱子的宽度为 1，给定的高度为 [2,1,5,6,2,3]。
+
+ 
+
+
+
+图中阴影部分为所能勾勒出的最大矩形面积，其面积为 10 个单位。
+
+ 
+
+示例:
+
+输入: [2,1,5,6,2,3]
+输出: 10
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/largest-rectangle-in-histogram
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+/*1.暴力
+考虑所有两两柱子之间形成的矩形面积，该矩形的高为它们之间最矮柱子的高度，
+宽为它们之间的距离，这样可以找到所要求的最大面积的矩形。
+时间复杂度：O(n^3)O(n3).我们需要使用O(n)O(n)的时间找到O(n^2)O(n2)枚举出来的所有柱子对之间的最矮柱子
+*/
+int largestRectangleArea1(vector<int>& heights) {
+    int maxarea=0;
+    for(int i=0;i<heights.size();i++){
+        for(int j=i;j<heights.size();j++){
+            int minheight=INT_MAX;
+            for(int k=i;k<=j;k++){
+                minheight=min(minheight,heights[k]);
+            }
+            maxarea=max(maxarea,minheight*(j-i+1));
+        }
+    }
+    return maxarea;
+}
+
+/*2优化的暴力
+我们可以基于方法 1 进行一点点修改来优化算法。我们可以用前一对柱子之间的最低高度来求出当前柱子对间的最低高度。
+时间复杂度：O(n^2)O(n2)。 需要枚举所有可能的柱子对。
+空间复杂度：O(1)O(1) 。不需要额外的空间。
+*/
+int largestRectangleArea2(vector<int>& heights) {
+    int maxarea=0;
+    for(int i=0;i<heights.size();i++){
+        int minheight=INT_MAX;
+        for(int j=i;j<heights.size();j++){
+            minheight=min(minheight,heights[j]);
+            maxarea=max(maxarea,minheight*(j-i+1));
+        }
+    }
+    return maxarea;
+}
