@@ -1,0 +1,64 @@
+/*
+二叉搜索树中的两个节点被错误地交换。
+请在不改变其结构的情况下，恢复这棵树。
+示例 1:
+输入: [1,3,null,null,2]
+   1
+  /
+ 3
+  \
+   2
+输出: [3,1,null,null,2]
+   3
+  /
+ 1
+  \
+   2
+示例 2:
+输入: [3,1,4,null,null,2]
+  3
+ / \
+1   4
+   /
+  2
+输出: [2,1,4,null,null,3]
+  2
+ / \
+1   4
+   /
+  3
+进阶:
+使用 O(n) 空间复杂度的解法很容易实现。
+你能想出一个只使用常数空间的解决方案吗？
+*/
+#include"head.h"
+
+void inorder(TreeNode* root,vector<int>& vecres){
+    if(root==nullptr){
+        return;
+    }
+    inorder(root->left,vecres);
+    vecres.push_back(root->val);
+    inorder(root->right,vecres);
+}
+
+void recover(TreeNode* root,vector<int>& res){
+    if(root==nullptr){
+        return;
+    }
+    recover(root->left,res);
+    if(root->val==res[0]){
+        res.erase(res.begin());
+    }else{
+        root->val=res[0];
+        res.erase(res.begin());
+    }
+    recover(root->right,res);
+}
+
+void recoverTree(TreeNode* root) {
+    vector<int> result;
+    inorder(root,result);
+    sort(result.begin(),result.end());
+    recover(root,result);
+}
