@@ -1,0 +1,42 @@
+给定一个二叉树，原地将它展开为链表。
+
+例如，给定二叉树
+
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+将其展开为：
+
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+          
+void flatten(TreeNode* root) {
+        dfs(root);
+    }
+    
+    TreeNode* dfs(TreeNode* rt){
+        if(!rt) return rt;
+        TreeNode* ltail = dfs(rt->left);
+        TreeNode* rtail = dfs(rt->right);
+        if(ltail) {
+            ltail->right = rt->right;
+            rt->right = rt->left;
+            rt->left=NULL;
+        }
+        if(rtail) return rtail;
+        if(ltail) return ltail;
+        return rt;
+    }
+
+//https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/hou-xu-bian-li-fa-by-jason-2-2/
