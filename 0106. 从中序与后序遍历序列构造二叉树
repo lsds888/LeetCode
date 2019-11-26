@@ -25,42 +25,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
-public:
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        if(!postorder.size()) return NULL;
-        int mid=postorder[postorder.size()-1];
-        vector<int> inleft;
-        vector<int> inright;
-        vector<int> poleft;
-        vector<int> poright;
-        int i=0;
-        int j=0;
-        for(;i<inorder.size();i++){
-            if(inorder[i]!=mid)
-                inleft.push_back(inorder[i]);
-            else
-                break;
-        }
-        i++;
-        for(;i<inorder.size();i++)
-            inright.push_back(inorder[i]);
-        for(;j<inleft.size();j++)
-            poleft.push_back(postorder[j]);
-        for(;j<postorder.size()-1;j++)
-            poright.push_back(postorder[j]);
-        TreeNode* root=new TreeNode(mid);
-        root->left=buildTree(inleft,poleft);
-        root->right=buildTree(inright,poright);
-        return root;
-    }
-};
 
-
-
-
-
-方法二：
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
