@@ -25,28 +25,26 @@
  */
 class Solution {
 public:
-    int helper(TreeNode* root, int sum){
-        if(root==NULL) return 0;
-        sum-=root->val;
-        if(sum==0&&root->left==NULL&&root->right==NULL){
-            count++;
-        }
-        helper(root->left,sum);
-        helper(root->right,sum);
-        return count;
+void helper(TreeNode* root,int sum,int& flag){
+    if(root==nullptr){
+        return;
     }
-    
-    bool hasPathSum(TreeNode* root, int sum) {
-        if(root==NULL) return false;
-        int i=helper(root,sum);
-        if(i>=1)
-            return true;
-        else
-            return false;
+    sum-=root->val;
+    if(sum==0&&root->left==nullptr&&root->right==nullptr){
+        flag++;
     }
-private:
-    int count=0;
+    helper(root->left,sum,flag);
+    helper(root->right,sum,flag);
+}
+
+bool hasPathSum(TreeNode* root, int sum) {
+    int flag=0;
+    helper(root,sum,flag);
+    if(flag>=1){
+        return true;
+    }else{
+        return false;
+    }
+}
 };
-
-
 执行用时: 8 ms, 在Path Sum的C++提交中击败了98.06% 的用户
