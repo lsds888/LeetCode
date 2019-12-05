@@ -1,0 +1,57 @@
+/*
+给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
+返回 s 所有可能的分割方案。
+示例:
+输入: "aab"
+输出:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+*/
+#include "head.h"
+
+bool isPalindrome(string s){
+    int len=s.size();
+    if(len==0){
+        return true;
+    }
+    int l=0;
+    int r=len-1;
+    while(l<=r){
+        if(s[l]!=s[r]){
+            return false;
+        }
+        l++;
+        r--;
+    }
+    return true;
+}
+
+void dfs(string s,vector<string> vec,vector<vector<string>> &res,int st){
+    int n=s.size();
+    if(st==n){
+        if(vec.size()>=1){
+            res.push_back(vec);
+        }
+        return;
+    }
+    for(int i=st;i<n;i++){
+        string str=s.substr(st,i-st+1);
+        if(isPalindrome(str)){
+            vec.push_back(str);
+            dfs(s,vec,res,i+1);
+            vec.pop_back();
+        }
+    }
+}
+
+vector<vector<string>> partition(string s) {
+    vector<string> vec;
+    vector<vector<string>> res;
+    if(s.size()==0){
+        return res;
+    }
+    dfs(s,vec,res,0);
+    return res;
+}
