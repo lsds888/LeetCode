@@ -1,0 +1,53 @@
+/*
+n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+上图为 8 皇后问题的一种解法。
+给定一个整数 n，返回 n 皇后不同的解决方案的数量。
+示例:
+输入: 4
+输出: 2
+解释: 4 皇后问题存在如下两个不同的解法。
+[
+ [".Q..",  // 解法 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // 解法 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+*/
+#include "head.h"
+
+void dfs(int n,int level,int &count,vector<int> lie,vector<int> u,vector<int> v){
+    if(level==n){
+        count++;
+        return;
+    }
+    for(int i=0;i<n;i++){
+        if(lie[i]==0 && u[level-i+n-1]==0 && v[level+i]==0){
+            lie[i]=1;
+            u[level-i+n-1]=1;
+            v[level+i]=1;
+            dfs(n,level+1,count,lie,u,v);
+            lie[i]=0;
+            u[level-i+n-1]=0;
+            v[level+i]=0;
+        }
+    }
+}
+
+int totalNQueens(int n) {
+    int count=0;
+    vector<int> lie(n,0); //列
+    vector<int> u(2*n,0);   //从左上到右下
+    vector<int> v(2*n,0);   //右上到左下
+    dfs(n,0,count,lie,u,v);
+    return count;  
+}
+
+int main(){
+    cout<<totalNQueens(4)<<endl;
+    return 0;
+}
