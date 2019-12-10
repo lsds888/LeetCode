@@ -1,0 +1,66 @@
+/*
+我们提供一个类：
+class FooBar {
+  public void foo() {
+    for (int i = 0; i < n; i++) {
+      print("foo");
+    }
+  }
+
+  public void bar() {
+    for (int i = 0; i < n; i++) {
+      print("bar");
+    }
+  }
+}
+两个不同的线程将会共用一个 FooBar 实例。其中一个线程将会调用 foo() 方法，另一个线程将会调用 bar() 方法。
+请设计修改程序，以确保 "foobar" 被输出 n 次。
+
+示例 1:
+输入: n = 1
+输出: "foobar"
+解释: 这里有两个线程被异步启动。其中一个调用 foo() 方法, 另一个调用 bar() 方法，"foobar" 将被输出一次。
+示例 2:
+输入: n = 2
+输出: "foobarfoobar"
+解释: "foobar" 将被输出两次。
+*/
+#include <iostream>
+#include <mutex>
+
+class FooBar {
+private:
+    int n;
+    int flag=0;
+    std::condition_variable cv1;
+    std::condition_variable cv2;
+    std::mutex g_mutex;
+public:
+    FooBar(int n) {
+        this->n = n;
+    }
+
+    void foo(function<void()> printFoo) {
+        
+        for (int i = 0; i < n; i++) {
+            std::unique_lock<std::mutex> lk(g_mutex);
+            cv1.wait(lk,[this](){return flag==0;});
+        	// printFoo() outputs "foo". Do not change or remove this line.
+        	printFoo();
+            flag=1;
+            cv2.notify_one();
+        }
+    }
+
+    void bar(function<void()> printBar) {
+        
+        for (int i = 0; i < n; i++) {
+            std::unique_lock<std::mutex> lk(g_mutex);
+            cv2.wait(lk,[this](){return flag==1;});
+        	// printBar() outputs "bar". Do not change or remove this line.
+        	printBar();
+            flag=0;
+            cv1.notify_one();
+        }
+    }
+};
