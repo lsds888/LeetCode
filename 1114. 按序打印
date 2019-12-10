@@ -69,3 +69,28 @@ private:
     std::condition_variable cv2;
     std::mutex g_mutex;
 };
+
+void printFirst(){
+    cout<<"first"<<endl;
+}
+
+void printSecond(){
+    cout<<"second"<<endl;
+}
+
+void printThird(){
+    cout<<"third"<<endl;
+}
+
+
+int main(){
+    Foo f;
+    std::thread mythread1(&Foo::first,&f,printFirst);  //使用类的函数作为线程的执行函数
+    std::thread mythread2(&Foo::second,&f,printSecond);
+    std::thread mythread3(&Foo::third,&f,printThird);
+    mythread1.join();
+    mythread2.join();
+    mythread3.join();
+    cout<<"main()执行完毕。。。"<<endl;
+    return 0;
+}
