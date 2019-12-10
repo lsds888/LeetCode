@@ -27,6 +27,9 @@ class FooBar {
 */
 #include <iostream>
 #include <mutex>
+#include <thread>
+
+using namespace std;
 
 class FooBar {
 private:
@@ -64,3 +67,21 @@ public:
         }
     }
 };
+
+void printFoo(){
+    std::cout<<"foo";
+}
+
+void printBar(){
+    std::cout<<"bar";
+}
+
+int main(){
+    FooBar fb(3);
+    std::thread mythread1(&FooBar::foo,&fb,printFoo);
+    std::thread mythread2(&FooBar::bar,&fb,printBar);
+    mythread1.join();
+    mythread2.join();
+    cout<<endl;
+    return 0;
+}
