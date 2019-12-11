@@ -1,3 +1,4 @@
+/*
 在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
 示例 1:
 输入: 4->2->1->3
@@ -5,61 +6,51 @@
 示例 2:
 输入: -1->5->3->4->0
 输出: -1->0->3->4->5
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-class Solution {
-public:
-    ListNode* findmiddle(ListNode* head){
-        ListNode* low=head;
-        ListNode* fast=head;
-        if(head==NULL) return NULL;
-        while(fast->next!=NULL&&fast->next->next!=NULL){
-            fast=fast->next->next;
-            low=low->next;
-        }
-        return low;
+*/
+#include "head.h"
+
+ListNode* findmiddle(ListNode* head){
+    if(head==nullptr) return nullptr;
+    ListNode* low=head;
+    ListNode* fast=head;
+    while(fast&&fast->next&&fast->next->next){
+        fast=fast->next->next;
+        low=low->next;
     }
-    
-    ListNode* merge(ListNode* first, ListNode* second){
-        ListNode* head=new ListNode(0);
-        ListNode* temp=head;
-        while(first!=NULL&&second!=NULL){
-            if(first->val<=second->val){
-                temp->next=first;
-                temp=first;
-                first=first->next;
-            }else{
-                temp->next=second;
-                temp=second;
-                second=second->next;
-            }
-        }
-        while(first){
+    return low;
+}
+
+ListNode* merge(ListNode* first, ListNode* second){
+    ListNode* head=new ListNode(-1);
+    ListNode* temp=head;
+    while(first&&second){
+        if(first->val<=second->val){
             temp->next=first;
             temp=first;
             first=first->next;
-        }
-        while(second){
+        }else{
             temp->next=second;
             temp=second;
             second=second->next;
         }
-        return head->next;
     }
-        
-    ListNode* sortList(ListNode* head) {
-        if(head==NULL || head->next==NULL) return head;
-        ListNode* mid=findmiddle(head);
-        ListNode* mid_next=mid->next;
-        mid->next=NULL;
-        ListNode* first=mergeSort(head);
-        ListNode* second=mergeSort(mid_next);
-        return merge(first,second);
+    if(first){
+        temp->next=first;
     }
-};
+    if(second){
+        temp->next=second;
+    }
+    return head->next;
+}
+
+ListNode* sortList(ListNode* head) {
+    if(head==nullptr||head->next==nullptr){
+        return head;
+    }        
+    ListNode* mid=findmiddle(head);
+    ListNode* mid_next=mid->next;
+    mid->next=nullptr;
+    ListNode* first=sortList(head);
+    ListNode* second=sortList(mid_next);
+    return merge(first,second);
+}
