@@ -1,0 +1,37 @@
+/*
+给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。
+示例 1:
+输入: [2,3,-2,4]
+输出: 6
+解释: 子数组 [2,3] 有最大乘积 6。
+示例 2:
+输入: [-2,0,-1]
+输出: 0
+解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。
+*/
+
+#include "head.h"
+
+int maxProduct(vector<int>& nums) {
+    if(nums.size()==1){
+        return nums[0];
+    }
+    int ma=INT_MIN;
+    int imax=1;
+    int imin=1;
+    for(int i=0;i<nums.size();i++){
+        if(nums[i]<0){
+            swap(imax,imin);
+        }
+        imax=max(imax*nums[i],nums[i]);
+        imin=min(imin*nums[i],nums[i]);
+        ma=max(ma,imax);
+    }
+    return ma;
+}
+
+int main(){
+    vector<int> vec={2,-1,1};
+    cout<<maxProduct(vec)<<endl;
+    return 0;
+}
